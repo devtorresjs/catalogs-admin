@@ -6,7 +6,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 
 
@@ -20,6 +20,8 @@ import { RouterOutlet } from '@angular/router';
     MatListModule,
     MatExpansionModule,
     RouterOutlet,
+    RouterLink,
+    RouterLinkActive
 
 ],
   templateUrl: './layout.component.html',

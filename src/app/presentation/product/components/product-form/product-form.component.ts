@@ -13,6 +13,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { FormUtils } from '../../../utils/form-utils';
 import { CreateProductModel } from '../../../../core/domain/product/models/create-product.model';
 import { GetProductModel } from '../../../../core/domain/product/models/get-product.model';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-product-form',
@@ -22,7 +23,8 @@ import { GetProductModel } from '../../../../core/domain/product/models/get-prod
     MatInputModule,
     MatButtonModule,
     MatSelectModule,
-    MatOptionModule
+    MatOptionModule,
+    RouterModule
   ],
   templateUrl: './product-form.component.html',
   styleUrl: './product-form.component.css'
