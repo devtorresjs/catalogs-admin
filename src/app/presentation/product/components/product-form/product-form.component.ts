@@ -40,7 +40,7 @@ export class ProductFormComponent {
   constructor() {
     effect(() => {
       const data = this.initialData();
-      console.log('Initial Data changed:', data);
+      console.log('Initial Data:', data);
       if (data) {
         this.productForm.patchValue(data);
       }
@@ -62,11 +62,18 @@ export class ProductFormComponent {
 
   submit() {
 
+    const data = this.initialData();
+    if (data) {
+      console.log('update data', this.initialData());
+    }
+
     if (this.productForm.invalid) {
       this.productForm.markAllAsTouched();
       return;
     }
-    //this.createProductUseCase.execute(this.productForm.value);
+
+
+
     console.log('Datos enviados:', this.productForm.value);
     this.addProduct.emit(this.productForm.value);
   }
