@@ -54,12 +54,11 @@
         </td>
       </ng-container>
 
-      <!-- Rows -->
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
     </table>
-    <mat-paginator [length]="dataSource.data.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]"
+    <mat-paginator #paginator [length]="totalItems" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]"
       showFirstLastButtons>
     </mat-paginator>
   </mat-card>

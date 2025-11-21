@@ -7,7 +7,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { provideGetProducts } from '../../../../core/repositories/product/providers/get-products.providers';
 import { GetProductsUseCase } from '../../../../core/usecases/product/get-products.usecase';
-import { Product } from '../../../../core/domain/product/models/get-products.model';
+import { GetProductsModel, Product } from '../../../../core/domain/product/models/get-products.model';
+import { catchError, map, merge, of, startWith, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-product-list',
@@ -27,28 +28,36 @@ import { Product } from '../../../../core/domain/product/models/get-products.mod
 })
 export class ProductListComponent {
 
+  displayedColumns = ['image', 'name', 'price', 'stock', 'status', 'actions'];
   dataSource = new MatTableDataSource<Product>([]);
+  totalItems = 0;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   private getProductsUseCase = inject(GetProductsUseCase);
 
   ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.loadProducts();
+    merge(this.paginator.page)
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+          return this.getProducts(
+            this.paginator.pageIndex + 1,
+            this.paginator.pageSize
+          );
+        }),
+        map((resp: GetProductsModel) => {
+          this.totalItems = resp.totalItems;
+          return resp.items;
+        }),
+        catchError(() => of([]))
+      )
+      .subscribe((items) => {
+        this.dataSource.data = items;
+      });
   }
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-
-
-  displayedColumns = ['image', 'name', 'price', 'stock', 'status', 'actions'];
-
-  loadProducts() {
-    this.getProductsUseCase.execute({ pageNumber: 1, pageSize: 10 })
-      .subscribe({
-        next: (response) => {
-          console.log('Productos cargados:', response);
-          this.dataSource.data = response.items;
-          this.paginator.length = response.totalItems;
-        }
-      });
+  private getProducts(pageNumber: number, pageSize: number) {
+    return this.getProductsUseCase.execute({ pageNumber, pageSize });
   }
 }
