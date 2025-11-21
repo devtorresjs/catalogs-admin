@@ -1,0 +1,19 @@
+// item.model.ts
+export interface Product {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  stock: number;
+  imageUrl: string;
+  status: 'Active' | 'Inactive'; // Puedes ajustar según los posibles estados
+}
+
+
+export interface GetProductsModel {
+  items: Product[];
+  totalItems: number;
+  pageNumber: number;
+  pageSize: number;
+  totalPages: number;
+}

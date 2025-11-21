@@ -1,0 +1,62 @@
+/* Contenedor general */
+.layout-container {
+  height: 100vh;
+}
+
+/* Menú lateral */
+.side-menu {
+  width: 220px;
+  background: #ffffff;
+  border-right: 1px solid #e0e0e0;
+
+  /* Evita scroll */
+  overflow: hidden !important;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-title {
+  text-align: center;
+  font-weight: 600;
+  margin: 0;
+  padding: 12px;
+  color: #3f51b5;
+  flex-shrink: 0;
+}
+
+/* Hace que la lista no cause scroll */
+mat-nav-list {
+  overflow: hidden;
+  padding: 0;
+}
+
+mat-nav-list a {
+  border-radius: 6px;
+  margin: 4px 8px;
+}
+
+mat-nav-list a mat-icon {
+  margin-right: 10px;
+}
+
+mat-nav-list a:hover {
+  background: #e8eaf6;
+}
+
+/* Toolbar */
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+/* Contenido */
+.content {
+  padding: 24px;
+  background: #fff;
+  margin: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.08);
+}
+
