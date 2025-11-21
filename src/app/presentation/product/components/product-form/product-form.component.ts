@@ -1,7 +1,6 @@
 import { Component, effect, inject, input, output } from '@angular/core';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
@@ -11,9 +10,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
-import { CreateProductUseCase } from '../../../../core/usecases/product/create-product.usecase';
 import { FormUtils } from '../../../utils/form-utils';
 import { CreateProductModel } from '../../../../core/domain/product/models/create-product.model';
+import { GetProductModel } from '../../../../core/domain/product/models/get-product.model';
 
 @Component({
   selector: 'app-product-form',
@@ -32,11 +31,19 @@ export class ProductFormComponent {
 
 
 
-  id = input<number>();
+  initialData = input<GetProductModel>();
 
   addProduct = output<CreateProductModel>();
 
-  private createProductUseCase = inject(CreateProductUseCase);
+  constructor() {
+    effect(() => {
+      const data = this.initialData();
+      console.log('Initial Data changed:', data);
+      if (data) {
+        this.productForm.patchValue(data);
+      }
+    });
+  }
 
   formUtils = FormUtils;
 
@@ -48,7 +55,7 @@ export class ProductFormComponent {
     precio: [0, [Validators.required, Validators.min(0)]],
     inventario: [0, [Validators.required, Validators.min(0)]],
     imagenUrl: ['', [Validators.minLength(3), Validators.maxLength(300)]],
-    estatus: ['Active', [Validators.minLength(3), Validators.maxLength(20)]],
+    estatus: ['Active'],
   });
 
   submit() {

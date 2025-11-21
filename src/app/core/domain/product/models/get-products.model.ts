@@ -1,4 +1,3 @@
-// item.model.ts
 export interface Product {
   id: number;
   name: string;
@@ -6,7 +5,7 @@ export interface Product {
   price: number;
   stock: number;
   imageUrl: string;
-  status: 'Active' | 'Inactive'; // Puedes ajustar según los posibles estados
+  status: 'Active' | 'Inactive';
 }
 
 

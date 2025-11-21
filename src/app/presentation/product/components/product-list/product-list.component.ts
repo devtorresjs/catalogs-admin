@@ -4,11 +4,14 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { DecimalPipe } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { Router } from '@angular/router';
+import { catchError, map, merge, of, startWith, switchMap } from 'rxjs';
+
+
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { provideGetProducts } from '../../../../core/repositories/product/providers/get-products.providers';
 import { GetProductsUseCase } from '../../../../core/usecases/product/get-products.usecase';
 import { GetProductsModel, Product } from '../../../../core/domain/product/models/get-products.model';
-import { catchError, map, merge, of, startWith, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-product-list',
@@ -27,6 +30,8 @@ import { catchError, map, merge, of, startWith, switchMap } from 'rxjs';
   ],
 })
 export class ProductListComponent {
+
+  constructor(private router: Router) { }
 
   displayedColumns = ['image', 'name', 'price', 'stock', 'status', 'actions'];
   dataSource = new MatTableDataSource<Product>([]);
@@ -60,4 +65,8 @@ export class ProductListComponent {
   private getProducts(pageNumber: number, pageSize: number) {
     return this.getProductsUseCase.execute({ pageNumber, pageSize });
   }
+
+  editProduct(productId: number) {
+  this.router.navigate(['/catalogs/editproduct', productId]);
+}
 }
