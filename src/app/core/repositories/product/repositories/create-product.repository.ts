@@ -4,6 +4,9 @@ import { CreateProductModel } from "../../../domain/product/models/create-produc
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { toCreateProductEntity } from "../mappers/create-product.mapper";
+import { environment } from "../../../../../environments/environment";
+
+const BASE_URL = environment.baseUrl;
 
 @Injectable()
 export class CreateProductRepository implements CreateProductAbsRepository {
@@ -13,6 +16,6 @@ export class CreateProductRepository implements CreateProductAbsRepository {
 
   createProduct(product: CreateProductModel): Observable<number> {
     const productEntity = toCreateProductEntity(product);
-    return this.http.post<number>('https://localhost:7164' + '/CreateProduct', productEntity);
+    return this.http.post<number>(BASE_URL + '/CreateProduct', productEntity);
   }
 }
